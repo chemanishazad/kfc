@@ -66,9 +66,11 @@ class _DetailsPageState extends State<DetailsPage> {
         this.runAddToCartAnimation = runAddToCartAnimation;
       },
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 234, 255, 180),
+        // backgroundColor: const Color.fromARGB(255, 234, 255, 180),
+        backgroundColor: const Color(0xffffdfa4),
+
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 234, 255, 180),
+          backgroundColor: const Color(0xffffdfa4),
           title: Text('Details'),
           centerTitle: false,
           actions: [
@@ -145,14 +147,14 @@ class _DetailsPageState extends State<DetailsPage> {
                           "\₹${widget.product.price.toStringAsFixed(2)}",
                           style: TextStyle(
                               fontSize: 28,
-                              color: Theme.of(context).primaryColor,
+                              color: Color(0xfffe6d02),
                               fontWeight: FontWeight.bold),
                         ),
                         const Text(
                           "Best Sale",
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey,
+                            color: const Color(0xfffeae11),
                           ),
                         ),
                       ],
@@ -171,7 +173,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   "Size Options",
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
+                    color: Color(0xfffe6d02),
                   ),
                 ),
               ),

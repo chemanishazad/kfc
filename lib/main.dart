@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Kfc',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: const Color(0xFF49A878),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          primaryColor: const Color(0xfffe6d02),
+          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           fontFamily: Fonts.averta,
           textTheme: const TextTheme(

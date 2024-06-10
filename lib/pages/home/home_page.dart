@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 234, 255, 180),
+      backgroundColor: const Color(0xffffdfa4),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage>
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 189, 1, 1),
+                    color: Color(0xfffe6d02),
                   ),
                   child: Stack(
                     children: [
@@ -191,13 +191,13 @@ class _HomePageState extends State<HomePage>
                         child: ClipPath(
                           clipper: TopOvalClipper(),
                           child: Container(
-                            color: const Color.fromARGB(255, 235, 231, 7),
+                            color: const Color(0xfffeae11),
                             width: MediaQuery.of(context).size.width,
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 140,
+                        top: 125,
                         bottom: 0,
                         left: 0,
                         right: 0,
@@ -234,8 +234,6 @@ class _HomePageState extends State<HomePage>
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) => DetailsPage(
-                                                
-
                                                 product:
                                                     selectedProducts[index],
                                               ),
@@ -253,12 +251,12 @@ class _HomePageState extends State<HomePage>
                                                 height: 180,
                                                 decoration: const BoxDecoration(
                                                   color: Color.fromARGB(
-                                                      255, 190, 178, 2),
+                                                      255, 252, 136, 28),
                                                   shape: BoxShape.circle,
                                                 ),
                                               ),
                                               Positioned(
-                                                bottom: 10,
+                                                bottom: 5,
                                                 top: 0,
                                                 child: Hero(
                                                   tag: selectedProducts[index]
@@ -290,7 +288,7 @@ class _HomePageState extends State<HomePage>
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 100,
+                              height: 50,
                               child: PageView.builder(
                                 itemCount: selectedProducts.length,
                                 controller: _textSlideController,
