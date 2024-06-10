@@ -2,6 +2,7 @@ class ProductModel {
   String name;
   String image;
   double price;
+  
 
   ProductModel({
     required this.name,

@@ -18,6 +18,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.7
   smooth_page_indicator: ^1.1.0
+  lottie: ^3.1.2
+  add_to_cart_animation: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +37,7 @@ flutter:
     - assets/
     - assets/fonts/
     - assets/icons/
+    - assets/icons/shake/
     - assets/videos/
     - assets/json/
 

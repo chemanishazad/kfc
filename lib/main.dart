@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kfc/pages/home/home_page.dart';
 import 'package:kfc/styles.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -14,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kfc',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: const Color(0xFF49A878),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

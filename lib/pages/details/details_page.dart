@@ -1,65 +1,118 @@
+import 'package:add_to_cart_animation/add_to_cart_animation.dart';
+import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:kfc/model/product_model.dart';
 import 'package:kfc/model/size_model.dart';
-import 'package:kfc/pages/details/widgets/details_app_bar.dart';
 import 'package:kfc/pages/details/widgets/order_button.dart';
 import 'package:kfc/pages/details/widgets/product_size.dart';
 import 'package:kfc/widgets/fade_in_down.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({Key? key, required this.product}) : super(key: key);
+  const DetailsPage({super.key, required this.product});
 
   final ProductModel product;
 
   @override
-  _DetailsPageState createState() => _DetailsPageState();
+  State<DetailsPage> createState() => _DetailsPageState();
 }
 
 class _DetailsPageState extends State<DetailsPage> {
   final List<SizeModel> sizes = [
-    SizeModel(name: "Tall", qty: "12 Fl Oz"),
-    SizeModel(name: "Grande", qty: "16 Fl Oz"),
-    SizeModel(name: "Venti", qty: "24 Fl Oz"),
-    SizeModel(name: "Custom", qty: "__ Fl Oz"),
+    SizeModel(name: "small", qty: "12 Fl Oz"),
+    SizeModel(name: "medium", qty: "16 Fl Oz"),
+    SizeModel(name: "large", qty: "24 Fl Oz"),
+    SizeModel(name: "xl", qty: "__ Fl Oz"),
   ];
 
   int selectedSize = 2;
+  int quantity = 1;
+  GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
+  GlobalKey imageGlobalKey = GlobalKey();
+  late Function(GlobalKey) runAddToCartAnimation;
+  var _cartQuantityItems = 0;
+
+  void listClick(GlobalKey widgetKey) async {
+    await runAddToCartAnimation(widgetKey);
+    await cartKey.currentState!
+        .runCartAnimation((++_cartQuantityItems).toString());
+  }
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 1) {
+        quantity--;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
+    return AddToCartAnimation(
+      cartKey: cartKey,
+      height: 30,
+      width: 30,
+      opacity: 0.85,
+      dragAnimation: const DragToCartAnimationOptions(
+        rotation: true,
+      ),
+      jumpAnimation: const JumpAnimationOptions(),
+      createAddToCartAnimation: (runAddToCartAnimation) {
+        this.runAddToCartAnimation = runAddToCartAnimation;
+      },
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 234, 255, 180),
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 234, 255, 180),
+          title: Text('Details'),
+          centerTitle: false,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.cleaning_services),
+              onPressed: () {
+                setState(() {
+                  _cartQuantityItems = 0;
+                });
+                cartKey.currentState!.runClearCartAnimation();
+              },
+            ),
+            const SizedBox(width: 16),
+            AddToCartIcon(
+              key: cartKey,
+              icon: const Icon(Icons.shopping_cart),
+              badgeOptions: const BadgeOptions(
+                active: true,
+                backgroundColor: Colors.red,
+              ),
+            ),
+            const SizedBox(
+              width: 16,
+            )
+          ],
+        ),
+        body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const DetailsAppBar(),
-              const SizedBox(
-                height: 20,
-              ),
               SizedBox(
-                height: 300,
+                height: MediaQuery.sizeOf(context).height / 2.5,
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 5,
-                      top: 0,
-                      child: Hero(
-                        tag: widget.product.name,
+                    Hero(
+                      tag: widget.product.name,
+                      child: Container(
+                        key: imageGlobalKey,
                         child: Image.asset(
                           widget.product.image,
-                          height: 400,
+                          height: MediaQuery.sizeOf(context).height,
                         ),
                       ),
                     ),
@@ -89,7 +142,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "\$${widget.product.price.toStringAsFixed(2)}",
+                          "\₹${widget.product.price.toStringAsFixed(2)}",
                           style: TextStyle(
                               fontSize: 28,
                               color: Theme.of(context).primaryColor,
@@ -154,8 +207,13 @@ class _DetailsPageState extends State<DetailsPage> {
             ],
           ),
         ),
+        bottomNavigationBar: OrderButton(
+          quantity: quantity,
+          increment: incrementQuantity,
+          decrement: decrementQuantity,
+          onAddToOrder: () => listClick(imageGlobalKey),
+        ),
       ),
-      bottomNavigationBar: const OrderButton(),
     );
   }
 }
